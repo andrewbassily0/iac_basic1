@@ -1,0 +1,28 @@
+digraph G {
+  rankdir = "RL";
+  node [shape = rect, fontname = "sans-serif"];
+  "aws_internet_gateway.igw" [label="aws_internet_gateway.igw"];
+  "aws_route.public_route" [label="aws_route.public_route"];
+  "aws_route_table.private_rt" [label="aws_route_table.private_rt"];
+  "aws_route_table.public_rt" [label="aws_route_table.public_rt"];
+  "aws_route_table_association.private_assoc" [label="aws_route_table_association.private_assoc"];
+  "aws_route_table_association.public_assoc" [label="aws_route_table_association.public_assoc"];
+  "aws_security_group.app_sg" [label="aws_security_group.app_sg"];
+  "aws_security_group.bastion_sg" [label="aws_security_group.bastion_sg"];
+  "aws_subnet.private_subnet" [label="aws_subnet.private_subnet"];
+  "aws_subnet.public_subnet" [label="aws_subnet.public_subnet"];
+  "aws_vpc.main" [label="aws_vpc.main"];
+  "aws_internet_gateway.igw" -> "aws_vpc.main";
+  "aws_route.public_route" -> "aws_internet_gateway.igw";
+  "aws_route.public_route" -> "aws_route_table.public_rt";
+  "aws_route_table.private_rt" -> "aws_vpc.main";
+  "aws_route_table.public_rt" -> "aws_vpc.main";
+  "aws_route_table_association.private_assoc" -> "aws_route_table.private_rt";
+  "aws_route_table_association.private_assoc" -> "aws_subnet.private_subnet";
+  "aws_route_table_association.public_assoc" -> "aws_route_table.public_rt";
+  "aws_route_table_association.public_assoc" -> "aws_subnet.public_subnet";
+  "aws_security_group.app_sg" -> "aws_vpc.main";
+  "aws_security_group.bastion_sg" -> "aws_vpc.main";
+  "aws_subnet.private_subnet" -> "aws_vpc.main";
+  "aws_subnet.public_subnet" -> "aws_vpc.main";
+}
